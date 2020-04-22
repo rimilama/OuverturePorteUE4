@@ -6,8 +6,11 @@
 #include "Engine/StaticMeshActor.h"
 #include "Components/MeshComponent.h"
 #include "Engine/TriggerVolume.h"
+#include "Components/TimelineComponent.h"
 #include "COpenDoor.generated.h"
 
+
+class UTimelineComponent;
 /**
  * 
  */
@@ -29,9 +32,28 @@ public:
 	
 	float MassToOpen;
 	
-	void TriggerChange(AActor*, AActor*);
+	UFUNCTION()
+	void TriggerChange(AActor* current, AActor* other);
 
+	UTimelineComponent* MyTimeline;
+
+	UPROPERTY(EditAnywhere)
+	UCurveFloat* CurveDoor;
+
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* Door;
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* LockSound;
 	
+	float RotateValue;
+	float TimelineValue;
+	float CurveFloatValue;
+	bool Fermeture;
+
+	UFUNCTION()
+	void ControleDoor();
+
 private:
 	float SetPoidsTotal();
 
